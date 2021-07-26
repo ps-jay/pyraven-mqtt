@@ -2,14 +2,14 @@
 
 ## Build
 
-```
+```shell
 export DOCKER_BUILDKIT=1
 docker build -t pyrmqtt .
 ```
 
 ## Run
 
-```
+```shell
 docker run \
     --detach \
     --tty \
@@ -19,4 +19,45 @@ docker run \
     pyrmqtt \
         --host "${MQTT_BROKER}" \
         --device /serial
+```
+
+## Ingest into Home Assistant
+
+Add a sensor to `configuration.yaml`:
+
+```yaml
+sensor Meter:
+  - platform: mqtt
+    state_topic: "raven"
+    name: "Current Demand"
+    unit_of_measurement: 'kW'
+    icon: mdi:flash
+    value_template: >-
+      {% if "demand" in value_json %}
+        {{ value_json.demand }}
+      {% else %}
+        {{ states('sensor.current_demand') }}
+      {% endif %}
+  - platform: mqtt
+    state_topic: "raven"
+    name: "Total Import"
+    unit_of_measurement: 'kWh'
+    icon: mdi:flash
+    value_template: >-
+      {% if "summation_delivered" in value_json %}
+        {{ value_json.summation_delivered }}
+      {% else %}
+        {{ states('sensor.total_import') }}
+      {% endif %}
+  - platform: mqtt
+    state_topic: "raven"
+    name: "Total Export"
+    unit_of_measurement: 'kWh'
+    icon: mdi:flash
+    value_template: >-
+      {% if "summation_received" in value_json %}
+        {{ value_json.summation_received }}
+      {% else %}
+        {{ states('sensor.total_export') }}
+      {% endif %}
 ```
