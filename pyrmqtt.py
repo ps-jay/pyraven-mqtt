@@ -29,6 +29,12 @@ def main():
                         help="Port number of the MQTT broker to publish to [%(default)s]",
                         default='1883')
 
+    parser.add_argument('--username', '-u',
+                        help="MQTT Username")
+
+    parser.add_argument('--password', '-p',
+                        help="MQTT Password")
+
     parser.add_argument('--topic', '-T',
                         help="Topic name to publish to [%(default)s]",
                         default='raven')
@@ -41,6 +47,8 @@ def main():
     # init a MQTT client
     client = mqtt.Client()
     connected = False
+
+    client.username_pw_set(username=args.username,password=args.password)
 
     while True:
         payload = json.dumps(raven_usb.long_poll_result())
