@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  pyrmqtt:
+    # Required:
+    # Change host, username and password details 
+    build: .
+    command: --host 10.0.0.1 --username username --password password --device \serial
+    devices:
+    # Required:
+    # Change /dev/ttyUSB0 to where your raven dongle is located
+      - "/dev/ttyUSB0:/serial"
+      - "/serial"
+    image: pyrmqtt
+    container_name: pyrmqtt
+    restart: always
+    tty: true
