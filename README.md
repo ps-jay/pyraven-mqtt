@@ -23,9 +23,10 @@ docker run \
         --device /serial
 ```
 ## Docker-compose
-```shell
+
 Please see docker-compose.yaml
-```
+
+
 ## Ingest into Home Assistant
 
 Add a sensor to `configuration.yaml`:
