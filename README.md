@@ -15,11 +15,17 @@ docker run \
     --tty \
     --restart=always \
     --name=pyrmqtt \
+    --username=username \
+    --password=password \
     --device="$(readlink -f /dev/serial/by-id/usb-Rainforest_RFA-Z106-RA-PC_RAVEn_v2.3.21-if00-port0):/serial" \
     pyrmqtt \
         --host "${MQTT_BROKER}" \
         --device /serial
 ```
+## Docker-compose
+
+Please see docker-compose.yaml
+
 
 ## Ingest into Home Assistant
 
