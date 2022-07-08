@@ -1,13 +1,12 @@
+---
 version: "3.8"
 services:
   pyrmqtt:
-    # Required:
-    # Change host, username and password details 
     build: .
-    command: --host 10.0.0.1 --username username --password password --device \serial
+    # ⚠️ Change host, username and password details to match your environment
+    command: --host 10.0.0.1 --username username --password password --device /serial
     devices:
-    # Required:
-    # Change /dev/ttyUSB0 to where your raven dongle is located
+      # ⚠️ Change /dev/ttyUSB0 to where your raven dongle is mounted
       - "/dev/ttyUSB0:/serial"
       - "/serial"
     image: pyrmqtt
