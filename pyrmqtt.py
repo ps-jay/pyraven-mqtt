@@ -48,7 +48,7 @@ def main():
     client = mqtt.Client()
     connected = False
     if args.username is not None and args.password is not None:
-            client.username_pw_set(username=args.username,password=args.password)
+        client.username_pw_set(username=args.username,password=args.password)
 
     while True:
         payload = json.dumps(raven_usb.long_poll_result())
