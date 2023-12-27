@@ -42,7 +42,11 @@ sensor Meter:
       {% if "demand" in value_json %}
         {{ value_json.demand }}
       {% else %}
-        {{ states('sensor.current_demand') }}
+        {% if states('sensor.current_demand') != "unknown" %}
+            {{ states('sensor.current_demand') }}
+          {% else %}
+             0
+          {% endif %}
       {% endif %}
   - platform: mqtt
     state_topic: "raven"
@@ -53,7 +57,11 @@ sensor Meter:
       {% if "summation_delivered" in value_json %}
         {{ value_json.summation_delivered }}
       {% else %}
-        {{ states('sensor.total_import') }}
+        {% if states('sensor.total_import') != "unknown" %}
+            {{ states('sensor.total_import') }}
+          {% else %}
+             0
+          {% endif %}
       {% endif %}
   - platform: mqtt
     state_topic: "raven"
@@ -64,6 +72,10 @@ sensor Meter:
       {% if "summation_received" in value_json %}
         {{ value_json.summation_received }}
       {% else %}
-        {{ states('sensor.total_export') }}
+        {% if states('sensor.total_export') != "unknown" %}
+            {{ states('sensor.total_export') }}
+          {% else %}
+             0
+          {% endif %}
       {% endif %}
 ```
